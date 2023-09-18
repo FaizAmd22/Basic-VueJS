@@ -35,8 +35,8 @@
                                 <span class="badge rounded-pill text-bg-warning align-text-top">
                                     {{ item.qty }}
                                 </span>
-                                {{ item.name }}
-                                <b>{{ item.price | currencyFormat }}</b>
+                                {{ item.product.name }}
+                                <b>{{ item.product.price * item.qty | currencyFormat }}</b>
                             </div>
                         </div>
                     </div>
