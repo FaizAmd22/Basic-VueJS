@@ -9,8 +9,8 @@ var app = new Vue({
         slugText: 'The Quick #{!&@ Brown 29',
         style: {
             label: ['fw-bold', 'mb-2'],
-            inputWidth : 60,
-            sliderStatus : true
+            inputWidth : 80,
+            sliderStatus : false
         }
     },
     mounted: function() {
@@ -34,10 +34,24 @@ var app = new Vue({
         },
         sliderState: function () {
             return this.style.sliderStatus ? 'd-flex' : 'd-none'
+        },
+        cartTotal: function () {
+            let sum = 0
+            for(key in this.cart) {
+                sum = sum + (this.cart[key].product.price * this.cart[key].qty)
+            }
+            return sum
+        },
+        cartQty: function () {
+            let qty = 0
+            for(key in this.cart) {
+                qty = qty + this.cart[key].qty
+            }
+            return qty
         }
     },
     methods: {
-        now: function() {
+        now: function () {
             var date = new Date();
             return(
                 String(date.getHours()) + "/" +
@@ -60,6 +74,13 @@ var app = new Vue({
                 this.cart[productIndex].qty++
             } else {
                 this.cart.push({product : product, qty: 1})
+            }
+        },
+        deleteItem: function (key) {
+            if (this.cart[key].qty > 1) {
+                this.cart[key].qty--
+            } else {
+                this.cart.splice(key, 1)
             }
         }
     }

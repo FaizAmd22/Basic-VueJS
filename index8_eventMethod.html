@@ -13,30 +13,32 @@
 <body>
     
     <div class="container" id="app">
-        <div>
+        <!-- <div>
             <h3>Slugtize</h3>
             <input type="text" class="form-control" v-model="slugText">
             <div class="font-weight text-danger">{{slugetize}}</div>
-        </div>
+        </div> -->
 
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-light bg-light fixed-top d-flex justify-content-end align-items-end align-content-end">
             <div class="navbar-text ml-auto d-flex">
-                <button class="mx-3 btn btn-sm btn-outline-success" @click="style.sliderStatus = !style.sliderStatus">
+                <button class="me-3 btn btn-sm btn-outline-success" @click="style.sliderStatus = !style.sliderStatus">
                     <i class="fa-solid fa-dollar-sign"></i>
                 </button>
-                <div class="mx-1">
+                <div class="me-3 dropdown" v-if="cart.length > 0">
                     <button class="btn btn-success btn-sm dropdown-toggle" id="dropdownCart" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <b>cart :</b>
-                        <span class="badge rounded-pill text-bg-success">{{cart.length}}</span>
+                        <span class="badge rounded-pill text-bg-success">{{ cartQty }}</span>
+                        <i class="fas fa-shopping-cart mx-2"></i>
+                        {{ cartTotal | currencyFormat}}
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownCart">
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCart">
                         <div v-for="(item, index) in cart" :key="index">
-                            <div class="dropdown-item-text text-nowrap">
+                            <div class="dropdown-item-text text-nowrap text-end">
                                 <span class="badge rounded-pill text-bg-warning align-text-top">
                                     {{ item.qty }}
                                 </span>
                                 {{ item.product.name }}
                                 <b>{{ item.product.price * item.qty | currencyFormat }}</b>
+                                <a href="#" class="badge text-bg-danger text-white link-underline link-underline-opacity-0 rounded-pill ms-2 fw-bold" @click.stop="deleteItem(index)">-</a>
                             </div>
                         </div>
                     </div>
@@ -44,7 +46,7 @@
             </div>
         </nav>
         <br>
-        <h1>My Shop</h1>
+        <h1 class="mt-5">My Shop</h1>
         <transition name="custom" enter-active-class="animate__animated animate__fadeInDown" leave-active-class="animate__animated animate__fadeOutUp">
             <div v-if="style.sliderStatus">
                 <div class="align-items-center" :class="sliderState">
@@ -57,7 +59,7 @@
             </div>
         </transition>
 
-        <transition-group name="kostum" tag="div" enter-active-class="animate__animated animate__fadeInDown" leave-active-class="animate__animated animate__fadeOut">
+        <transition-group name="kostum" tag="div" enter-active-class="animate__animated animate__fadeInLeft" leave-active-class="animate__animated animate__fadeOutRight">
             <div class="row d-flex mb-3 align-items-center" v-for="(item, index) in products" :key="item.id" v-if="item.price <= Number(maximum)">
                     <div class="col-1 m-auto">
                         <button class="btn btn-info" v-on:click="addItem(item)">+</button>
