@@ -4,3 +4,10 @@
 .fade-enter-active, .fade-leave-active {
     transition: all 5s ease-in;
 }
+
+.label {
+    width: 55px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
