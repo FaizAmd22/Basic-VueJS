@@ -1,4 +1,22 @@
 // Perbedaan Methods dan Computed adalah computed dijalankan/ dipanggil satu kali karena function yang dipanggil tidak menggunakan (). Sedangkan Methods dapat menjalankan fungsi secara terus menerus karena fungsi yang dipanggil menggunakan ().
+Vue.component('price', {
+    data: function () {
+        return {
+         }
+    },
+    props: {
+        value: Number,
+        prefix: {
+            type: String,
+            default: 'Rp. '
+        },
+        precision: {
+            type: Number,
+            default: 2
+        }
+    },
+    template: '<span>{{ this.prefix + Number.parseFloat(this.value).toFixed(this.precision) }}</span>'
+})
 
 var app = new Vue({
     el: '#app',
